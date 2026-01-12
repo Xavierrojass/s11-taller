@@ -8,13 +8,13 @@ struct Libro {
     char titulo[100];
     char autor[50];
     int anio;
-    char estado[12]; 
+    char estado[12];
 };
 
 struct Libro biblioteca[MAX_LIBROS];
 int totalLibros = 0;
 
-
+// Verificar si el ID ya existe
 int idExiste(int id) {
     for (int i = 0; i < totalLibros; i++) {
         if (biblioteca[i].id == id) {
@@ -26,8 +26,8 @@ int idExiste(int id) {
 
 // Registrar libro
 void registrarLibro() {
-    if (totalLibros >= MAX_LIBROS) {
-        printf("No se pueden registrar más de 10 libros.\n");
+    if (totalLibros == MAX_LIBROS) {
+        printf("❌ Límite excedido: solo se permiten 10 libros.\n");
         return;
     }
 
@@ -37,11 +37,12 @@ void registrarLibro() {
     scanf("%d", &nuevo.id);
 
     if (idExiste(nuevo.id)) {
-        printf("Error: El ID ya existe.\n");
+        printf("❌ Error: El ID ya existe.\n");
         return;
     }
 
     getchar(); // limpiar buffer
+
     printf("Ingrese título: ");
     fgets(nuevo.titulo, 100, stdin);
     nuevo.titulo[strcspn(nuevo.titulo, "\n")] = 0;
@@ -50,13 +51,19 @@ void registrarLibro() {
     fgets(nuevo.autor, 50, stdin);
     nuevo.autor[strcspn(nuevo.autor, "\n")] = 0;
 
-    printf("Ingrese año de publicación: ");
-    scanf("%d", &nuevo.anio);
+    // Validación del año
+    do {
+        printf("Ingrese año de publicación (mayor a 0): ");
+        scanf("%d", &nuevo.anio);
+        if (nuevo.anio <= 0) {
+            printf("❌ Año inválido. No puede ser negativo ni cero.\n");
+        }
+    } while (nuevo.anio <= 0);
 
     strcpy(nuevo.estado, "Disponible");
 
     biblioteca[totalLibros++] = nuevo;
-    printf("Libro registrado correctamente.\n");
+    printf("✅ Libro registrado correctamente.\n");
 }
 
 // Mostrar libros
@@ -183,4 +190,3 @@ int main() {
     } while (opcion != 6);
 
     return 0;
-}

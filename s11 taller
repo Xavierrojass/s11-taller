@@ -27,7 +27,7 @@ int idExiste(int id) {
 // Registrar libro
 void registrarLibro() {
     if (totalLibros == MAX_LIBROS) {
-        printf("❌ Límite excedido: solo se permiten 10 libros.\n");
+        printf(" Límite excedido: solo se permiten 10 libros.\n");
         return;
     }
 
@@ -37,7 +37,7 @@ void registrarLibro() {
     scanf("%d", &nuevo.id);
 
     if (idExiste(nuevo.id)) {
-        printf("❌ Error: El ID ya existe.\n");
+        printf(" Error: El ID ya existe.\n");
         return;
     }
 
@@ -56,14 +56,14 @@ void registrarLibro() {
         printf("Ingrese año de publicación (mayor a 0): ");
         scanf("%d", &nuevo.anio);
         if (nuevo.anio <= 0) {
-            printf("❌ Año inválido. No puede ser negativo ni cero.\n");
+            printf(" Año inválido. No puede ser negativo ni cero.\n");
         }
     } while (nuevo.anio <= 0);
 
     strcpy(nuevo.estado, "Disponible");
 
     biblioteca[totalLibros++] = nuevo;
-    printf("✅ Libro registrado correctamente.\n");
+    printf(" Libro registrado correctamente.\n");
 }
 
 // Mostrar libros
